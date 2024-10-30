@@ -14,6 +14,12 @@ function App() {
   
   const [userInput, setUserInput] = useState('');
 
+  const PORT = process.env.PORT || 3000;
+  server.listen(PORT, () => {
+      console.log(`서버가 ${PORT}에서 시작되었습니다.`);
+  });
+
+
   function connectToChatServer(){
       console.log('connectToChatServer');
       const _socket = io('http://localhost:3000',{
