@@ -1,0 +1,36 @@
+.ChatList{
+  margin-top: 250px;
+  margin-bottom: 50px;
+  
+}
+.Navbar{
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.MessageInput{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+}
+
+.MessageInput >input{
+  flex-grow: 1;
+}
+
+.Card{
+  text-align: center;
+}
+
+.Card > input{
+  flex-grow: 1;
+  width: 70%;
+}
+input{
+  border-radius: 10px;
+  height: 40px;
+}
