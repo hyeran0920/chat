@@ -17,8 +17,8 @@ function App() {
 
 
   function connectToChatServer(){
-      console.log('connectToChatServer');
-      const _socket = io('https://chat-g21o.onrender.com/',{
+      console.log('채팅서버 연결되었습니다');
+      const _socket = io('https://chat-izsj.onrender.com/',{
         autoConnect : false,
         query:{
           username : username,
@@ -95,17 +95,18 @@ function App() {
         {isConnected ? (
           // 접속 중일 때
           <>
-            <h4 style={{ textAlign: "right" }}>
-              유저 : {username} 접속상태 : {isConnected ? "접속중" : "미접속"}&nbsp;&nbsp;<br/><br/>
+            <h5 style={{ textAlign: "right" }}>
+              유저 : {username} &nbsp;
+              {/* 접속상태 : {isConnected ? "접속중" : "미접속"}&nbsp;&nbsp;<br/><br/> */}
             <button  onClick={() => disconnectToChatServer()}>
               접속종료
             </button>
-            </h4>
+            </h5>
           </>
         ) : (
           // 미접속 중일 때
           <div className="Card">
-            <h3>닉네임을 입력해주세요!</h3><br/>
+            <h5>닉네임을 입력해주세요!</h5>
             <input 
               value={username} 
               onChange={e => setUsername(e.target.value)} 
