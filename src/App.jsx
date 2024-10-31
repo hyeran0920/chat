@@ -19,6 +19,7 @@ function App() {
   function connectToChatServer(){
       console.log('채팅서버 연결되었습니다');
       const _socket = io('https://chat-izsj.onrender.com/',{
+      // const _socket = io('http://localhost:3000/',{
         autoConnect : false,
         query:{
           username : username,
@@ -30,34 +31,34 @@ function App() {
     }
 
     function disconnectToChatServer(){
-      console.log('connectToChatServer');
+      // console.log('connectToChatServer');
       socket?.disconnect(); //물음표는 소켓이 있는지 없는지 모르겠지만 일단 disconnect하는것
     }
 
     function onConnected(){
-      console.log('연결되었습니다')
+      // console.log('연결되었습니다')
       setisConnected(true);
     }
     function onDisconnected(){
-      console.log('종료되었습니다')
+      // console.log('종료되었습니다')
       setisConnected(false);
     }
 
     function sendMessageToChatServer(){
-      console.log(`메세지 전송 ${userInput}` )
+      // console.log(`메세지 전송 ${userInput}` )
       socket?.emit("new message",{username: username, message : userInput},(response) =>{
-        console.log(response);
+        // console.log(response);
       });
       setUserInput('');
     }
 
     function onMessageRecived(msg){
-      console.log(msg)
+      // console.log(msg)
       setMessages(previous => [...previous, msg]);
     }
 
     useEffect(() => {
-      console.log('화면 스크롤' )
+      // console.log('화면 스크롤' )
 
       window.scrollTo({
         top: document.body.scrollHeight,
@@ -68,14 +69,14 @@ function App() {
     
 
     useEffect(() => {
-      console.log('useEffact called!');
+      // console.log('useEffact called!');
       socket?.on('connect', onConnected)
       socket?.on('disconnect', onDisconnected)
 
       socket?.on('new message', onMessageRecived)
 
       return () => {
-        console.log('useEffect clean up function called!')
+        // console.log('useEffect clean up function called!')
         socket?.off('connect', onConnected)
         socket?.off('disconnect', onDisconnected)
         socket?.off('new message', onMessageRecived)
@@ -84,7 +85,7 @@ function App() {
 
     const messageList = messages.map((aMsg, index) =>
       <li key={index}>
-        {aMsg.username} : {aMsg.message}
+      {aMsg.username} : {aMsg.message}
       </li>
     );
 
@@ -123,13 +124,22 @@ function App() {
         {messageList}
       </ul>
       
-        <div className="MessageInput">
-          <input value={userInput} onChange={e => setUserInput(e.target.value)}          
-          placeholder="채팅을 입력해주세요" />
-          <button onClick={() => sendMessageToChatServer()}>
+      <div className="MessageInput">
+        <input 
+          value={userInput} 
+          onChange={e => setUserInput(e.target.value)}          
+          placeholder="채팅을 입력해주세요" 
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              sendMessageToChatServer(); // 엔터키를 누르면 메시지 전송
+            }
+          }}
+        />
+        <button onClick={() => sendMessageToChatServer()}>
           <FaArrowUp /> {/* 위쪽 화살표 아이콘 */}
-          </button>
-        </div>
+        </button>
+      </div>
+
 
         
     </>
